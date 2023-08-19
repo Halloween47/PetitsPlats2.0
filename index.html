@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    
+    <!-- Style -->
+    <link rel="stylesheet" href="style.css">
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+    <header>
+        <div id="logo" class="p-4">
+            <img src="assets/Logo.svg" alt="">
+        </div>
+        <div class="zoneRecherche">
+            <h1>CHERCHEZ PARMI PLUS DE 1500 RECETTES DU QUOTIDIEN,SIMPLES ET DÉLICIEUSES</h1>
+            <div id="recherche" class=" py-2">            
+                <input type="text" placeholder="Rechercher une recette, un ingrédient, ..." id="recherchePrincipal">
+                <button type="button" class="px-2 py-1 btn btn-dark " id="buttonSearch">
+                    <!-- <a href="#"></a> -->
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+    <main>
+        <div class="main-header">
+            <div class="zoneFilters p-3">
+                <div class="filters mr-1">
+                    <div class="zone-filterButton p-3">
+                        <label for="">Ingrédient</label>
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </div>
+                    <div class="dropdown-content">
+                        <div class="zoneSearch mx-3">
+                            <input type="text" class="search-bar" placeholder="..." id="searchbarIngredients">
+                            <i class="fa-solid fa-magnifying-glass px-2"></i>
+                        </div>
+                        <!-- <ul class="ingredient-list px-3 py-3"> -->
+                        <ul class="ingredient-list px-0 py-3">
+                        </ul>
+                    </div>
+                </div>
+                <div class="filters mr-1">
+                    <div class="zone-filterButton p-3">
+                        <label for="">Appareils</label>
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </div>
+                    <div class="dropdown-content">
+                        <div class="zoneSearch mx-3">
+                            <input type="text" class="search-bar" placeholder="..." id="searchbarAppareils">
+                            <i class="fa-solid fa-magnifying-glass px-2"></i>
+                        </div>
+                        <ul class="appareils-list px-0 py-3">
+                        </ul>
+                    </div>
+                </div>
+                <div class="filters mr-1">
+                    <div class="zone-filterButton p-3">
+                        <label for="">Ustensils</label>
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </div>
+                    <div class="dropdown-content">
+                        <div class="zoneSearch mx-3">
+                            <input type="text" class="search-bar" placeholder="..." id="searchbarUstensils">
+                            <i class="fa-solid fa-magnifying-glass px-2"></i>
+                        </div>
+                        <ul class="ustensils-list px-0 py-3">
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <p>1500 recettes</p>
+        </div>
+        <div class="zoneTags p-3"></div>
+        <div class="main-zoneCards container">
+            <div class="card" style="width: 25rem;">
+                <img class="card-img-top" src="assets/img/Recette04.jpg" alt="Card image cap">
+                <div class="card-body">
+                  <h5 class="card-title">Limonade de coco</h5>
+                  <h6 class="card-title">Recette</h6>
+                  <p class="card-text">Mettre les glaçons à votre goût dans le blender, Ajouter le lait  la crème de coco, le jus de 2 citrons et le sucre ensemble. Mixer jusqu'à obtenir la consistance désirée.</p>
+                </div>
+                <div class="card-body">
+                <h6 class="card-title">Ingrédients</h6>
+                <ul class="list-group list-group-flush">
+                  <li class="list-group-item">Cras justo odio
+                    <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                  </li>
+                  <li class="list-group-item">Dapibus ac facilisis in
+                    <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                  </li>
+                  <li class="list-group-item">Vestibulum at eros
+                    <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                  </li>
+                </ul>
+            </div>
+                <div class="card-body">
+                  <a href="#" class="card-link">Card link</a>
+                  <a href="#" class="card-link">Another link</a>
+                </div>
+              </div>
+        </div>   
+    </main>
+
+    <!-- Donnees -->
+    <script src="assets/data/data.json"></script>
+    <script type="module" src="js/service/searchService.js"></script>
+    <!-- <script src="js/controlleurs/searchControlleur.js"></script> -->
+    
+    <!-- Controle -->
+    <script type="module" src="js/controlleurs/search.js"></script>
+    <script type="module" src="js/controlleurs/tags.js"></script>
+    
+    <!-- Factory -->
+    <script src="js/factories/searchbarFactory.js"></script>
+    <script src="js/factories/tagsFactory.js"></script>
+
+</body>
+</html>
