@@ -32,12 +32,69 @@ export class RecipesService {
     ]
     */
     search(motRecherche, filtreRecherche) {
-        return this.recipes.filter((recipe) =>
-        recipe.name.toLowerCase().includes(motRecherche)
-        );
+        /////////////////////////
+        // return this.recipes.filter((recipe) =>
+        // recipe.name.toLowerCase().includes(motRecherche));
+        //////////////////////////////////////////////
+        // console.log('test');
+        
+        /////////////////////////////////////////////
+        // return this.recipes.filter((recipe) => {
+        //     const ingredients = recipe.ingredients.map(ingredient => ingredient.ingredient.toLowerCase());
+        //       const appliance = recipe.appliance.toLowerCase();
+        //       const utensils = recipe.ustensils.map(utensil => utensil.toLowerCase());
+        
+        //       return (
+        //           recipe.name.toLowerCase().includes(motRecherche) &&
+        
+        //           (filtreRecherche.includes('Blender') ? 
+        //           appliance.includes('blender') :
+        //           true
+        //           ) &&
+        //           (filtreRecherche.includes('ustensils') ? 
+        //           utensils.some(utensil => motRecherche.includes(utensil)) :
+        //           true
+        //           )
+        //           );
+        //         });
+        /////////////////////////////////////////////
+
+        // Recherche d'origine
+        let recherchePrincipal = this.recipes.filter((recipe) => 
+        recipe.name.toLowerCase().includes(motRecherche))
+        
+        // Tableau de tout les INGREDIENTS
+        let tableauIngredients = [];
+        this.recipes.filter((recipe) => recipe.ingredients.forEach((ingredient) => tableauIngredients.push(ingredient.ingredient)));
+        console.log(tableauIngredients);
+        
+        // Tableau de tout les USTENSILS
+        let tableauUstensils = [];
+        this.recipes.filter((recipe) => recipe.ustensils.forEach((ustensil) => tableauUstensils.push(ustensil)));
+        
+        if (recherchePrincipal && !filtreRecherche) {
+            return recherchePrincipal;
+        }
+        else if (recherchePrincipal && filtreRecherche) {
+            let resulatsAvecFiltres = recherchePrincipal.filter((recipe) => 
+            filtreRecherche.find((filtre) => {
+                filtre === recipe.appliance
+            } )
+            )
+            
+            return resulatsAvecFiltres;
+        }
+        
+        
+        /////////////
+        
+        
+        /////////////
+        
         
         
     }
+    
     
     toutesLesInfos() {
         return this.recipes;

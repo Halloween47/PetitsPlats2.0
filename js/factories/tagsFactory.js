@@ -5,7 +5,7 @@ function tagsFactory() {
         const zoneListeIngredients = document.querySelector('.ingredient-list');
         
         let unIngredient = document.createElement('li');
-        unIngredient.setAttribute('class', 'px-3 py-1 tagsList');
+        unIngredient.setAttribute('class', 'px-3 py-1 li-ingredients');
         unIngredient.textContent = ingredient;
         
         zoneListeIngredients.appendChild(unIngredient);
@@ -19,7 +19,7 @@ function tagsFactory() {
         const zoneListeAppareils = document.querySelector('.appareils-list');
         
         let unAppareil = document.createElement('li');
-        unAppareil.setAttribute('class', 'px-3 py-1 tagsList')
+        unAppareil.setAttribute('class', 'px-3 py-1 li-appareils')
         unAppareil.textContent = appareil;
         
         zoneListeAppareils.appendChild(unAppareil);
@@ -33,7 +33,7 @@ function tagsFactory() {
         const zoneListeUstensils = document.querySelector('.ustensils-list');
         
         let unUstensil = document.createElement('li');
-        unUstensil.setAttribute('class', 'px-3 py-1 tagsList')
+        unUstensil.setAttribute('class', 'px-3 py-1 li-ustensils');
         unUstensil.textContent = ustensil;
         
         zoneListeUstensils.appendChild(unUstensil);
