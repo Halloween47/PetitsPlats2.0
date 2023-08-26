@@ -58,15 +58,16 @@ export class RecipesService {
         //           );
         //         });
         /////////////////////////////////////////////
-
+        
         // Recherche d'origine
         let recherchePrincipal = this.recipes.filter((recipe) => 
         recipe.name.toLowerCase().includes(motRecherche))
+        console.log(recherchePrincipal);
         
         // Tableau de tout les INGREDIENTS
         let tableauIngredients = [];
         this.recipes.filter((recipe) => recipe.ingredients.forEach((ingredient) => tableauIngredients.push(ingredient.ingredient)));
-        console.log(tableauIngredients);
+        // console.log(tableauIngredients);
         
         // Tableau de tout les USTENSILS
         let tableauUstensils = [];
@@ -76,13 +77,34 @@ export class RecipesService {
             return recherchePrincipal;
         }
         else if (recherchePrincipal && filtreRecherche) {
-            let resulatsAvecFiltres = recherchePrincipal.filter((recipe) => 
-            filtreRecherche.find((filtre) => {
-                filtre === recipe.appliance
-            } )
-            )
             
-            return resulatsAvecFiltres;
+            
+            console.log('recherche principa && les filtrress');
+            
+            let nouveauTableauAvecFiltre = recherchePrincipal.filter((recipe) => {
+                // Verification présence "appareils"
+                const hasAppliance = filtreRecherche.includes(recipe.appliance);
+                // console.log(hasAppliance);
+                
+                // Verification présence "ustensils"
+                const hasUstensils = recipe.ustensils.some(ustensil => filtreRecherche.some(ustensil));
+                
+                
+                console.log(hasUstensils);
+                
+                
+                // return hasUstensils;
+            })
+            
+            
+            console.log(nouveauTableauAvecFiltre);
+            // return nouveauTableauAvecFiltre;
+            
+            
+            
+            
+            
+            
         }
         
         

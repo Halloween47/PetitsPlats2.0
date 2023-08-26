@@ -37,17 +37,17 @@ recherchePrincipal.addEventListener("input", (event) => {
     let boutonUstensilsListe = [];
     let tableauFiltres = [];
     console.log(tableauFiltres);
-
+    
     // Retour nouveau tableau en fonction de la recherche
     // ********************************************
     const matchingRecipes = searchService.search(searchText, '');
     let newRecipesDatas = matchingRecipes;
     console.log(newRecipesDatas);
-
+    
     // Remise à zero du contenu
     // ********************************************
     zoneResults.innerHTML = "";
-
+    
     // Création des cartes de recettes
     // ********************************************
     newRecipesDatas.forEach((recipe) => {
@@ -72,7 +72,7 @@ recherchePrincipal.addEventListener("input", (event) => {
       const recipeCardDOM = recipeModel.getRecipeCardDOM(nameRecipe, infosRecette, imageJpg, ingredients);
       zoneResults.appendChild(recipeCardDOM);
     })
-
+    
     // Construction de la liste du bouton "ingredients"
     // ********************************************
     // console.log(`Les ingrédients sont : ${boutonIngredientsListe}`);
@@ -89,8 +89,8 @@ recherchePrincipal.addEventListener("input", (event) => {
       li.addEventListener('click', () => {
         console.log('Élément li cliqué :', li.textContent);
         let texteTag = li.textContent;
-
-tableauFiltres.push(texteTag);
+        
+        tableauFiltres.push(texteTag);
         
         // Apparition du tag
         const tagModel = tagsFactory();
@@ -111,15 +111,15 @@ tableauFiltres.push(texteTag);
       li.addEventListener('click', () => {
         console.log('Élément li cliqué :', li.textContent);
         let texteTag = li.textContent;
-
+        
         tableauFiltres.push(texteTag);
         let motRechercheEnCours = recherchePrincipal.value;
         console.log(motRechercheEnCours);
         console.log(tableauFiltres);
-
+        
         let tableauAvecAppareil = searchService.search(motRechercheEnCours,tableauFiltres)
         console.log(tableauAvecAppareil);
-
+        
         // Apparition du tag
         const tagModel = tagsFactory();
         const tagCardDOM = tagModel.getTagCardDOM(texteTag);
@@ -139,8 +139,12 @@ tableauFiltres.push(texteTag);
       li.addEventListener('click', () => {
         console.log('Élément li cliqué :', li.textContent);
         let texteTag = li.textContent;
+        
         tableauFiltres.push(texteTag);
-
+        let motRechercheEnCours = recherchePrincipal.value;
+        let tableauAvecUstensil = searchService.search(motRechercheEnCours,tableauFiltres)
+        
+        
         // Apparition du tag
         const tagModel = tagsFactory();
         const tagCardDOM = tagModel.getTagCardDOM(texteTag);
@@ -149,7 +153,7 @@ tableauFiltres.push(texteTag);
     
   }
   
-
+  
 });
 
 
