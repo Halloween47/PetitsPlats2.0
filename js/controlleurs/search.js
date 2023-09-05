@@ -32,7 +32,7 @@ recherchePrincipal.addEventListener("input", (event) => {
 
   let resultat = searchService.search(searchText, "");
 
-  console.log("resultat : " + JSON.stringify(resultat));
+  console.log(JSON.stringify(resultat));
 
   /*
 

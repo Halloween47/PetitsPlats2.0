@@ -3,214 +3,211 @@ import recipes from '../data/recipes';
 export class RecipesService {
 
     constructor() {
-        // this.data = require('./assets/data/data.json');
         this.recipes = recipes;
     }
 
-    //doit renvoyer un json avec le résultat et les nouveaux filtres
-    /*
-    [
-        "recettes" : [
-            {
-                ...
-            },
-            {
-                ...
-            }
+  /*
+    "filtreRecherche": {
+        "ingredients": [
+            "Tomate",
+            "Pommes de terre",
+            "Huile d'olives",
+            "Oignon",
+            "Ail",
+            "Oseille",
+            "Oeuf",
+            "Crème fraîche",
+            "Vermicelles",
+            "Beurre salé",
+            "Poireau",
+            "Beurre"
         ],
-        "filtres":[
-            "ingredients":[
-                ...
-            ],
-            "appliance":[
-                ...
-            ],
-            "ustensils":[
-                ...
-            ]
+        "ustensils": [
+            "cocotte minute",
+            "couteau",
+            "cuillère en bois",
+            "casserole"
+        ],
+        "appliance": [
+            "Mixer",
+            "Casserole"
         ]
-    ]
-    */
+    }*/
+
+   /* TODO: a continuer avec Clément
     search(motRecherche, filtreRecherche) {
         let resultat = this.recipes.filter((recipe) =>
             recipe.name.toLowerCase().includes(motRecherche)
         );
 
-        let recettes = new Array(resultat);
-        let filtres = new Array("");
-        let retour = new Array(recettes, filtres);
+        const ingredientsSet = new Set();
+        const ustensilsSet = new Set();
+        const applianceSet = new Set();
 
-        return retour;
+        resultat.forEach(recipe => {
+            applianceSet.add(recipe.appliance);
+            recipe.ingredients.forEach(ingredient => ingredientsSet.add(ingredient.ingredient));
+            recipe.ustensils.forEach(ustensil => ustensilsSet.add(ustensil));
+        });
+        
+        return {
+            recettes: new Array(resultat),
+            filtres: {
+                ingredients: Array.from(ingredientsSet),
+                ustensils: Array.from(ustensilsSet),
+                appliance: Array.from(applianceSet)
+            }
+        }
     }
-
-
-    /*
-    // Recherche d'origine
-    let recherchePrincipal = this.recipes.filter((recipe) => 
-    recipe.name.toLowerCase().includes(motRecherche))
-    console.log(recherchePrincipal);
-    
-    // Tableau de tout les INGREDIENTS
-    let tableauIngredients = [];
-    this.recipes.filter((recipe) => recipe.ingredients.forEach((ingredient) => tableauIngredients.push(ingredient.ingredient)));
-    // console.log(tableauIngredients);
-     
-    // Tableau de tout les USTENSILS
-    let tableauUstensils = [];
-    this.recipes.filter((recipe) => recipe.ustensils.forEach((ustensil) => tableauUstensils.push(ustensil)));
-    
-    if (recherchePrincipal && !filtreRecherche) {
-        return recherchePrincipal;
-    }
-    else if (recherchePrincipal && filtreRecherche) {
-        console.log('recherche principa && les filtrress');
-        // ////////////////////////////////////////////////////
-        // // Filtrage par APPAREILS 
-        // let recetteAvecAppareils = recherchePrincipal.filter((recipe) => filtreRecherche.includes(recipe.appliance));
-        // console.log(recetteAvecAppareils);
-        
-        // // Filtrage par USTENSILS 
-    // let recetteAvecUstensils = recherchePrincipal.filter(recipe => recipe.ustensils.some(ustensil => filtreRecherche.includes(ustensil)));
-        // console.log(recetteAvecUstensils);
-        
-            // // Filtrage par INGREDIENTS 
-        // let recetteAvecIngredients = recherchePrincipal.filter(recipe => recipe.ingredients.some(ingredient => filtreRecherche.includes(ingredient.ingredient   )));
-    // console.log(recetteAvecIngredients);
-        
-        // // return recetteAvecAppareils;
-        // // return recetteAvecUstensils;
-        // // return recetteAvecIngredients;
-    // recetteAvecIngredients.concat(recetteAvecAppareils, recetteAvecUstensils);        }
-        // ////////////////////////////////////////////////////
-        let recetteAvecAppareils = recherchePrincipal.filter(recipe => filtreRecherche.includes(recipe.appliance));
-        let recetteAvecUstensils = recherchePrincipal.filter(recipe => recipe.ustensils.some(ustensil => filtreRecherche.includes(ustensil)));
-    let recetteAvecIngredients = recherchePrincipal.filter(recipe => recipe.ingredients.some(ingredient => filtreRecherche.includes(ingredient.ingredient)));
-        
-        let choixCumule = recetteAvecIngredients.concat(recetteAvecAppareils, recetteAvecUstensils);
-        console.log(choixCumule);
-        
-    return choixCumule;
-    
-    }*/
-
-
-    /* searchAdvanced(tableauRecipesEnCours, motRecherche, categorieFiltre) {
-         
-         // Stockage tableau en cours
-    eauTableauRecettes = tableauRecipesEnCours;
-         
-         if (categorieFiltre === "ingredients") {
-    echerche dans le filtre INGREDIENTS
-    recetteAvecIngredients = nouveauTableauRecettes.filter((recipe) => recipe.ingredients.some((ingredient) => ingredient.ingredient === motRecherche));
-             
-    érification
-    ole.log(recetteAvecIngredients);
-             
-             return recetteAvecIngredients
-    
-    if ( categorieFiltre === "appareils") {
-             // Recherche dans le filtre APPAREILS
-             let recetteAvecAppareils = nouveauTableauRecettes.filter(recipe => recipe.appliance === motRecherche);
-    
-    // Vérification
-    console.log(recetteAvecAppareils);
-    
-    return recetteAvecAppareils
-    
-         else if (categorieFiltre === "ustensils") {
-     // Recherche dans le filtre USTENSILS
-     let recetteAvecUstensils = nouveauTableauRecettes.filter(recipe => recipe.ustensils.some(ustensil => ustensil === motRecherche));
-             
-     // Vérification
-     console.log(recetteAvecUstensils);
-             
-     return recetteAvecUstensils
-    }
-    else {
-             // Recherche dans la SEARCHBAR
-         let recherchePrincipal = nouveauTableauRecettes.filter((recipe) => 
-         recipe.name.toLowerCase().includes(motRecherche));
-             
-             // Vérification
-             console.log(recherchePrincipal);
-         
-             return recherchePrincipal;
-    }
-         
-    
-     
-     
     */
+    search(motRecherche, filtreRecherche) {
+        return {
+            "recettes": [
+                [
+                    {
+                        "id": 26,
+                        "image": "Recette26.jpg",
+                        "name": "Soupe de tomates",
+                        "servings": 2,
+                        "ingredients": [
+                            {
+                                "ingredient": "Tomate",
+                                "quantity": 6
+                            },
+                            {
+                                "ingredient": "Pommes de terre",
+                                "quantity": 1
+                            },
+                            {
+                                "ingredient": "Huile d'olives"
+                            },
+                            {
+                                "ingredient": "Oignon",
+                                "quantity": 1
+                            },
+                            {
+                                "ingredient": "Ail",
+                                "quantity": 1,
+                                "unit": "gousses"
+                            }
+                        ],
+                        "time": 25,
+                        "description": "Verser de l'huile dans une cocotte minute couper les légumes et les verser dans l'huile chaude. Laisser cuire et remuer pendant 10 minutes. Passer aux mixer. Servir.",
+                        "appliance": "Mixer",
+                        "ustensils": [
+                            "cocotte minute",
+                            "couteau"
+                        ]
+                    },
+                    {
+                        "id": 27,
+                        "image": "Recette27.jpg",
+                        "name": "Soupe à l'oseille",
+                        "servings": 4,
+                        "ingredients": [
+                            {
+                                "ingredient": "Oseille",
+                                "quantity": 2
+                            },
+                            {
+                                "ingredient": "Oeuf",
+                                "quantity": 1
+                            },
+                            {
+                                "ingredient": "Crème fraîche",
+                                "quantity": 4,
+                                "unit": "cuillère à soupe"
+                            },
+                            {
+                                "ingredient": "Vermicelles",
+                                "quantity": 1,
+                                "unit": "verres"
+                            },
+                            {
+                                "ingredient": "Beurre salé",
+                                "quantity": 50,
+                                "unit": "grammes"
+                            }
+                        ],
+                        "time": 15,
+                        "description": "Faire fondre l'oseille avec du beurre demi sel, ajouter un litre d'eau. Ajouter les vermicelles. Laisser cuire. une fois prêt, sortir du feu et après 5 minutes ajouter le jaune d'oeuf et la crème fraîche",
+                        "appliance": "Casserole",
+                        "ustensils": [
+                            "couteau",
+                            "cuillère en bois"
+                        ]
+                    },
+                    {
+                        "id": 28,
+                        "image": "Recette28.jpg",
+                        "name": "Soupe de poireaux",
+                        "servings": 4,
+                        "ingredients": [
+                            {
+                                "ingredient": "Poireau",
+                                "quantity": 3
+                            },
+                            {
+                                "ingredient": "Pommes de terre",
+                                "quantity": 400,
+                                "unit": "grammes"
+                            },
+                            {
+                                "ingredient": "Oseille",
+                                "quantity": 75,
+                                "unit": "grammes"
+                            },
+                            {
+                                "ingredient": "Beurre",
+                                "quantity": 50,
+                                "unit": "grammes"
+                            },
+                            {
+                                "ingredient": "Crème fraîche",
+                                "quantity": 10,
+                                "unit": "cl"
+                            }
+                        ],
+                        "time": 80,
+                        "description": "Émincer les blanc de poireaux et les faire chauffer dans 25 grammes de beurre. AJouter les pommes de terres coupées en morceaux. Ajouter l'eau et laisser mijoter pour 45 minutes. Chauffer l'oseille avec le beurre restant puis incorporer le tout. Mixez. Ajoutez la crème. Bon appetit.",
+                        "appliance": "Mixer",
+                        "ustensils": [
+                            "casserole",
+                            "couteau"
+                        ]
+                    }
+                ]
+            ],
+            "filtres": {
+                "ingredients": [
+                    "Tomate",
+                    "Pommes de terre",
+                    "Huile d'olives",
+                    "Oignon",
+                    "Ail",
+                    "Oseille",
+                    "Oeuf",
+                    "Crème fraîche",
+                    "Vermicelles",
+                    "Beurre salé",
+                    "Poireau",
+                    "Beurre"
+                ],
+                "ustensils": [
+                    "cocotte minute",
+                    "couteau",
+                    "cuillère en bois",
+                    "casserole"
+                ],
+                "appliance": [
+                    "Mixer",search
+                    "Casserole"
+                ]
+            }
+        }
+    }
+
     toutesLesInfos() {
         return this.recipes;
     }
-    /*
-     ingredients() {
-    
-         const listeIngredients = [];
-    
-         this.recipes.map(recipe => {
-             const ingredientsList = recipe.ingredients.map(ingredient => ingredient.ingredient);
-     
-             // Affiche la liste des ingrédients de chaque recette
-     // console.log(ingredientsList); 
-             
-         ingredientsList.forEach((test) => listeIngredients.push(test))
-             
-    });
-         
-         // Suppression des doublons
-         const listeIngredientsSansDoublons = [...new Set(listeIngredients)];
-         
-         return listeIngredientsSansDoublons;
-    
-     }
-    
-     appareils() {
-         
-         const listeAppareils = [];
-         this.recipes.filter(recipe => {
-     const appareilsList = recipe.appliance;
-             // console.log(appareilsList);
-         listeAppareils.push(appareilsList);
-             
-    });
-         
-         // Suppression des doublons
-    const listeAppareilsSansDoublons = [...new Set(listeAppareils)];
-         // console.log(listeAppareilsSansDoublons);
-         return listeAppareilsSansDoublons;
-         
-    
-     
-     ustensils() {
-    
-         const listeUstensils = [];
-    // console.log(listeUstensils);
-         
-         this.recipes.map(recipe => {
-             const ustensils = recipe.ustensils;
-     // console.log(ustensils);
-     
-     ustensils.forEach(element => listeUstensils.push(element))
-         })
-         
-         // console.log(listeUstensils);
-         
-    const nouvelleListeUstensils = [];
-         listeUstensils.map(unUstensils =>  nouvelleListeUstensils.push(unUstensils))
-     // console.log(nouvelleListeUstensils);
-         
-         
-         
-         // Suppression des doublons
-         const listeUstensilsSansDoublons = [...new Set(nouvelleListeUstensils)];
-         // console.log(listeUstensilsSansDoublons);
-         return listeUstensilsSansDoublons;
-         
-     }
-     
-    }
-    */
-
 }
