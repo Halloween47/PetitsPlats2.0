@@ -50,6 +50,7 @@ class TagsFactory {
         unTag.setAttribute('class', 'tag d-flex justify-content-between align-items-center mx-3 p-3');
         
         let tagTexte = document.createElement('div');
+        tagTexte.setAttribute('class', 'tagTexte');
         tagTexte.textContent = elementClique;
         unTag.appendChild(tagTexte);
         
