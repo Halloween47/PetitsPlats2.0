@@ -1,7 +1,11 @@
 // Recuperation du Modele
 import { RecipesService } from "../service/searchService";
+import { afficheLeTag, lanceLaRechercheEtFaitLeRendu, toutLesIngredientsPourLeBoutonFiltre } from "./search";
+import { filtres } from "./search";
 
 let searchService = new RecipesService();
+let tagsFactory = new TagsFactory();
+
 
 // DOM
 const searchbarIngredients = document.querySelector('#searchbarIngredients');
@@ -13,78 +17,64 @@ const zoneListeAppareils = document.querySelector('.appareils-list');
 const searchbarUstensils = document.querySelector('#searchbarUstensils');
 const zoneListeUstensils = document.querySelector('.ustensils-list');
 
+async function rechercheIngredients(motRecherche) {
+
+
+
+    // faire une recherche du mot motRecherche au sein des filtres présents (et donc founi par le retour de service de searchService)
+let resultat = searchService.search(motRecherche);
+console.log(resultat);
+console.log(resultat);
+
+
+}
+
 // EVENT sur la recherche d'ingredients
 searchbarIngredients.addEventListener("input", (event) => {
-    const searchText = event.target.value.trim().toLowerCase();
-    
-    console.log(searchText); 
-    
-    ///////////////////////////////
-    ///////////////////////////////
-    const listeIngredients = searchService.ingredients();
-    
-    const nouvelleListeDIngredients = listeIngredients.filter(aliment => aliment.toLowerCase().includes(searchText));
-    
-    console.log(nouvelleListeDIngredients);
+    const searchTextIngredient = event.target.value.trim().toLowerCase();
+
+    // console.log(searchTextIngredient); 
+    // console.log(toutLesIngredientsPourLeBoutonFiltre); 
+
+    // rechercheIngredients(searchTextIngredient, );
     zoneListeIngredients.innerHTML = "";
-    
-    nouvelleListeDIngredients.forEach((ingredient) => {
-        // Remise à zero du contenu
-        const tagModel = tagsFactory();
-        const ingredientCardDOM = tagModel.getIngredientCardDOM(ingredient);
+
+    const ingredients = searchService.searchFiltres(event, searchTextIngredient);
+    ingredients.forEach((ingredient) => {
+        tagsFactory.getIngredientCardDOM(ingredient);
     });
-    
-    ///////////////////////////////
-    ///////////////////////////////
+
+
 });
 
 // EVENT sur la recherche des appareils
 searchbarAppareils.addEventListener("input", (event) => {
-    const searchText = event.target.value.trim().toLowerCase();
     
-    console.log(searchText); 
-    
-    ///////////////////////////////
-    ///////////////////////////////
-    const listeAppareils = searchService.appareils();
-    
-    const nouvelleListeDesAppareils = listeAppareils.filter(appareil => appareil.toLowerCase().includes(searchText));
-    
-    console.log(nouvelleListeDesAppareils);
+    const searchTextAppareils = event.target.value.trim().toLowerCase();
+
     zoneListeAppareils.innerHTML = "";
-    
-    nouvelleListeDesAppareils.forEach((appareil) => {
-        // Remise à zero du contenu
-        const tagModel = tagsFactory();
-        const appareilCardDOM = tagModel.getAppareilCardDOM(appareil);
+
+    const appareils = searchService.searchFiltres(event, searchTextAppareils);
+    appareils.forEach((appareil) => {
+        tagsFactory.getAppareilCardDOM(appareil);
     });
-    
-    ///////////////////////////////
-    ///////////////////////////////
+
+
 });
 
 // EVENT sur la recherche des ustensils
 searchbarUstensils.addEventListener("input", (event) => {
-    const searchText = event.target.value.trim().toLowerCase();
     
-    console.log(searchText); 
-    
-    ///////////////////////////////
-    ///////////////////////////////
-    const listeUstensils = searchService.ustensils();
-    
-    const nouvelleListeDesUstensils = listeUstensils.filter(ustensil => ustensil.toLowerCase().includes(searchText));
-    
-    console.log(nouvelleListeDesUstensils);
+    const searchTextUstensils = event.target.value.trim().toLowerCase();
+
     zoneListeUstensils.innerHTML = "";
-    
-    nouvelleListeDesUstensils.forEach((ustensil) => {
-        const tagModel = tagsFactory();
-        const ustensilCardDOM = tagModel.getUstensilCardDOM(ustensil);
+
+    const ustensils = searchService.searchFiltres(event, searchTextUstensils);
+    ustensils.forEach((ustensil) => {
+        tagsFactory.getUstensilCardDOM(ustensil);
     });
-    
-    ///////////////////////////////
-    ///////////////////////////////
+
+
 });
 
 const filtre = document.querySelector('.filters');

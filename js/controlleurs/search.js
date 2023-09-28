@@ -8,7 +8,7 @@ const ingredientList = document.querySelector('.ingredient-list');
 // Utilisation du Modèle
 let searchService = new RecipesService();
 let searchText = "";
-let filtres = {
+export let filtres = {
   ingredients: [],
   ustensils: [],
   appliance: []
@@ -17,8 +17,8 @@ let filtres = {
 // ?
 let tableauRecettesFiltrer = [];
 let tagsFactory = new TagsFactory();
-let tableauTags = [];
-
+export let tableauTags = [];
+MAJTableauTags();
 /***************************************************/
 /*FONCTIONS*/
 /***************************************************/
@@ -26,9 +26,9 @@ function videLaListeDesRecettes() {
   document.querySelector('.main-zoneCards').innerHTML = "";
 }
 
-function lanceLaRechercheEtFaitLeRendu() {
+export function lanceLaRechercheEtFaitLeRendu() {
   let resultat = searchService.search(searchText, filtres);
-  console.log(filtres);
+  console.log(resultat.recettes.length);
   
   const zoneListeIngredients = document.querySelector('.ingredient-list');
   const zoneListeAppareils = document.querySelector('.appareils-list');
@@ -36,6 +36,9 @@ function lanceLaRechercheEtFaitLeRendu() {
   zoneListeIngredients.innerHTML = "";
   zoneListeAppareils.innerHTML = "";
   zoneListeUstensils.innerHTML = "";
+
+  const nombreRecette = document.querySelector('.nombreRecette');
+  nombreRecette.textContent = resultat.recettes.length + " recettes";
   
   // Création cartes recettes
   resultat.recettes.forEach((recipe) => {
@@ -133,7 +136,7 @@ function afficheLaListeDesRecettes(resultat) {
   });
 }
 
-function afficheLeTag(tableauTags, texteTag) {
+export function afficheLeTag(tableauTags, texteTag) {
   const zoneTags = document.querySelector('.zoneTags');
   zoneTags.innerHTML = "";
 
@@ -146,34 +149,49 @@ function afficheLeTag(tableauTags, texteTag) {
   let croixDeToutLesTags = document.querySelectorAll('.fa-xmark');
   croixDeToutLesTags.forEach((croixTag) => {
     croixTag.addEventListener('click', (event) => {
-      fermerTag(tableauTagsSansDoublons, texteTag, event);
+      // MAJTableauTags();
+      fermerTag(tableauTags, texteTag, event);
+
+      let resultat = searchService.search(searchText, filtres);
+      afficheLaListeDesRecettes(resultat)
     })
   })
   /********* */
 }
 
-function fermerTag(tableauTagsSansDoublons, texteTag, event) {
-  console.log(tableauTagsSansDoublons);
-  console.log(texteTag);
+function fermerTag(tableauTag, texteTag, event) {
   const tagASupprimer = event.target.parentElement;
-  console.log(tagASupprimer);
   tagASupprimer.remove();
 
   // On prends le texte cliqué
   const texteElementASupprimer = tagASupprimer.firstChild.textContent;
-  // on prends le tableau sans doublon
-  const tableauSansElementSupprime = tableauTagsSansDoublons.filter(element => element != texteElementASupprimer);
-  console.log(tableauSansElementSupprime);
-  // on retire lelement clique
-  // on verifie le contenu du tableau
+  // on prends le tableau 
+  const tableauSansElementSupprime = tableauTags.filter(element => element != texteElementASupprimer);
+  tableauTags = [...new Set(tableauSansElementSupprime)] ;
+  console.log(tableauTags);
+
   
-  console.log(tableauTagsSansDoublons);
+}
+
+function MAJTableauTags( nouveauTableauMAJ, nouvelleElement) {
+  
+  
+  // tableauTags.push(nouvelleElement);
+  // tableauTags = tableauTags.filter(element => element != undefined)
+  // console.log(tableauTags);
+
+  // let tableauTagsSansDoublons = [...new Set(tableauTags)];
+  // console.log(tableauTagsSansDoublons);
+
+  // return tableauTagsSansDoublons
+
+  return tableauTags
 }
 /***************************************************/
 /*GESTION DES FILTRES*/
 /***************************************************/
 /* Filtre "ingredients" */
-const toutLesIngredientsPourLeBoutonFiltre = searchService.toutLesIngredients();
+export const toutLesIngredientsPourLeBoutonFiltre = searchService.toutLesIngredients();
 toutLesIngredientsPourLeBoutonFiltre.forEach((ingredient) => {
   tagsFactory.getIngredientCardDOM(ingredient);
 });
@@ -199,7 +217,6 @@ containerIngredients.addEventListener('click', (event) => {
     const element = event.target;
     filtres.ingredients.push(element.textContent)
     let resultat = searchService.search(searchText, filtres);
-    console.log(resultat);
     videLaListeDesRecettes();
     afficheLaListeDesRecettes(resultat);
     const zoneListeIngredients = document.querySelector('.ingredient-list');
@@ -207,10 +224,15 @@ containerIngredients.addEventListener('click', (event) => {
     const zoneListeUstensils = document.querySelector('.ustensils-list');
     afficheLesFiltres(zoneListeIngredients, resultat, zoneListeUstensils, zoneListeAppareils);
 
+    // MAJTableauTags(element.textContent);
+// const tabTagsMAJ = MAJTableauTags();
+// console.log(tabTagsMAJ);
+//     afficheLeTag(tabTagsMAJ, element.textContent);
+// const nouveauTabTagsMAJ = MAJTableauTags(element.textContent)
+//     afficheLeTag(nouveauTabTagsMAJ, element.textContent);
+    
     tableauTags.push(element.textContent);
-    afficheLeTag(tableauTags, element.textContent);
-    
-    
+    afficheLeTag(tableauTags)
   }
   
 })
