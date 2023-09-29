@@ -36,9 +36,10 @@ export function lanceLaRechercheEtFaitLeRendu() {
   zoneListeIngredients.innerHTML = "";
   zoneListeAppareils.innerHTML = "";
   zoneListeUstensils.innerHTML = "";
-
-  const nombreRecette = document.querySelector('.nombreRecette');
-  nombreRecette.textContent = resultat.recettes.length + " recettes";
+  
+  // const nombreRecette = document.querySelector('.nombreRecette');
+  // nombreRecette.textContent = resultat.recettes.length + " recettes";
+  nombreRecetteMAJ(resultat)
   
   // Création cartes recettes
   resultat.recettes.forEach((recipe) => {
@@ -67,6 +68,7 @@ export function lanceLaRechercheEtFaitLeRendu() {
       console.log(JSON.stringify(resultat));
       afficheLaListeDesRecettes(resultat);
       afficheLesFiltres(zoneListeIngredients, resultat, zoneListeUstensils, zoneListeAppareils);
+      nombreRecetteMAJ(resultat);
     })
   })
   
@@ -80,6 +82,7 @@ export function lanceLaRechercheEtFaitLeRendu() {
       let resultat = searchService.search(searchText, filtres);
       afficheLaListeDesRecettes(resultat);
       afficheLesFiltres(zoneListeIngredients, resultat, zoneListeUstensils, zoneListeAppareils);
+      nombreRecetteMAJ(resultat);
     })
   })
   
@@ -94,6 +97,7 @@ export function lanceLaRechercheEtFaitLeRendu() {
       console.log(resultat);
       afficheLaListeDesRecettes(resultat);
       afficheLesFiltres(zoneListeIngredients, resultat, zoneListeUstensils, zoneListeAppareils);
+      nombreRecetteMAJ(resultat);
       
       tagsFactory.getTagCardDOM(element.textContent)
     })
@@ -139,7 +143,7 @@ function afficheLaListeDesRecettes(resultat) {
 export function afficheLeTag(tableauTags, texteTag) {
   const zoneTags = document.querySelector('.zoneTags');
   zoneTags.innerHTML = "";
-
+  
   let tableauTagsSansDoublons = [...new Set(tableauTags)];
   tableauTagsSansDoublons.forEach((tag) => {
     tagsFactory.getTagCardDOM(tag);
@@ -152,8 +156,33 @@ export function afficheLeTag(tableauTags, texteTag) {
       // MAJTableauTags();
       fermerTag(tableauTags, texteTag, event);
 
+      const elementParentDuTag = event.target.parentElement;
+      const texteDuTagFerme = elementParentDuTag.firstChild.textContent;
+
+
+      let nouveauTableauIngredients = filtres.ingredients.filter((ingredient) => {
+        return ingredient !== texteDuTagFerme;
+      })
+      filtres.ingredients = nouveauTableauIngredients;
+
+      let nouveauTableauAppareils = filtres.appliance.filter((appareil) => {
+        return appareil !== texteDuTagFerme;
+      })
+      filtres.appliance = nouveauTableauAppareils;
+
+      let nouveauTableauUstensils = filtres.ustensils.filter((ustensil) => {
+        return ustensil !== texteDuTagFerme;
+      })
+      filtres.ustensils = nouveauTableauUstensils;
+
+      console.log(filtres);
+
       let resultat = searchService.search(searchText, filtres);
-      afficheLaListeDesRecettes(resultat)
+      console.log(resultat);
+      videLaListeDesRecettes();
+      afficheLaListeDesRecettes(resultat);
+      nombreRecetteMAJ(resultat);
+      
     })
   })
   /********* */
@@ -162,14 +191,14 @@ export function afficheLeTag(tableauTags, texteTag) {
 function fermerTag(tableauTag, texteTag, event) {
   const tagASupprimer = event.target.parentElement;
   tagASupprimer.remove();
-
+  
   // On prends le texte cliqué
   const texteElementASupprimer = tagASupprimer.firstChild.textContent;
   // on prends le tableau 
   const tableauSansElementSupprime = tableauTags.filter(element => element != texteElementASupprimer);
   tableauTags = [...new Set(tableauSansElementSupprime)] ;
   console.log(tableauTags);
-
+  
   
 }
 
@@ -179,13 +208,18 @@ function MAJTableauTags( nouveauTableauMAJ, nouvelleElement) {
   // tableauTags.push(nouvelleElement);
   // tableauTags = tableauTags.filter(element => element != undefined)
   // console.log(tableauTags);
-
+  
   // let tableauTagsSansDoublons = [...new Set(tableauTags)];
   // console.log(tableauTagsSansDoublons);
-
+  
   // return tableauTagsSansDoublons
-
+  
   return tableauTags
+}
+
+function nombreRecetteMAJ(resultat) {
+  const nombreRecette = document.querySelector('.nombreRecette');
+  nombreRecette.textContent = resultat.recettes.length + " recettes";
 }
 /***************************************************/
 /*GESTION DES FILTRES*/
@@ -223,13 +257,13 @@ containerIngredients.addEventListener('click', (event) => {
     const zoneListeAppareils = document.querySelector('.appareils-list');
     const zoneListeUstensils = document.querySelector('.ustensils-list');
     afficheLesFiltres(zoneListeIngredients, resultat, zoneListeUstensils, zoneListeAppareils);
-
+    
     // MAJTableauTags(element.textContent);
-// const tabTagsMAJ = MAJTableauTags();
-// console.log(tabTagsMAJ);
-//     afficheLeTag(tabTagsMAJ, element.textContent);
-// const nouveauTabTagsMAJ = MAJTableauTags(element.textContent)
-//     afficheLeTag(nouveauTabTagsMAJ, element.textContent);
+    // const tabTagsMAJ = MAJTableauTags();
+    // console.log(tabTagsMAJ);
+    //     afficheLeTag(tabTagsMAJ, element.textContent);
+    // const nouveauTabTagsMAJ = MAJTableauTags(element.textContent)
+    //     afficheLeTag(nouveauTabTagsMAJ, element.textContent);
     
     tableauTags.push(element.textContent);
     afficheLeTag(tableauTags)
