@@ -29,6 +29,11 @@ function videLaListeDesRecettes() {
 export function lanceLaRechercheEtFaitLeRendu() {
   let resultat = searchService.search(searchText, filtres);
   console.log(resultat.recettes.length);
+  if (resultat.recettes.length === 0) {
+    console.log('pas de resultat');
+    getNoResultCardDOM();
+
+  }
   
   const zoneListeIngredients = document.querySelector('.ingredient-list');
   const zoneListeAppareils = document.querySelector('.appareils-list');
@@ -253,6 +258,7 @@ containerIngredients.addEventListener('click', (event) => {
     let resultat = searchService.search(searchText, filtres);
     videLaListeDesRecettes();
     afficheLaListeDesRecettes(resultat);
+    nombreRecetteMAJ(resultat);
     const zoneListeIngredients = document.querySelector('.ingredient-list');
     const zoneListeAppareils = document.querySelector('.appareils-list');
     const zoneListeUstensils = document.querySelector('.ustensils-list');
@@ -279,6 +285,7 @@ containerAppareils.addEventListener('click', (event) => {
     videLaListeDesRecettes();
     
     afficheLaListeDesRecettes(resultat);
+    nombreRecetteMAJ(resultat);
     
     const zoneListeIngredients = document.querySelector('.ingredient-list');
     const zoneListeAppareils = document.querySelector('.appareils-list');
@@ -298,6 +305,7 @@ containerUstensils.addEventListener('click', (event) => {
     videLaListeDesRecettes();
     
     afficheLaListeDesRecettes(resultat);
+    nombreRecetteMAJ(resultat);
     
     const zoneListeIngredients = document.querySelector('.ingredient-list');
     const zoneListeAppareils = document.querySelector('.appareils-list');
@@ -323,11 +331,21 @@ recherchePrincipal.addEventListener("input", (event) => {
     
     lanceLaRechercheEtFaitLeRendu();
     
-  }
-  
+  } 
   
 });
 
+const boutonRecherche = document.querySelector('#buttonSearch');
+boutonRecherche.addEventListener('click', (event) => {
+  
+  searchText = event.target.value.trim().toLowerCase();
+  const zoneCards = document.querySelector('.main-zoneCards');
+    
+  // Remise à zéro de la zone de résultat
+  zoneCards.innerHTML = "";
+  
+  lanceLaRechercheEtFaitLeRendu();
+})
 
 
 /*

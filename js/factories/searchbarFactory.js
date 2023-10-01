@@ -86,3 +86,23 @@ function getRecipeCardDOM(recette) {
 
     return card;
 }
+
+function getNoResultCardDOM() {
+    const zoneCards = document.querySelector('.main-zoneCards');
+    const card = document.createElement('div');
+    card.setAttribute('class', 'card');
+    zoneCards.appendChild(card);
+
+    // Creation "zone body"
+    const cardZoneBody = document.createElement('div');
+    cardZoneBody.setAttribute("class", "card-body");
+    card.appendChild(cardZoneBody);
+
+    // Zone du contenu de la Card
+    const cardTitle = document.createElement('h5');
+    cardTitle.setAttribute('class', 'card-title');
+    cardTitle.textContent = '0 resultat';
+    cardZoneBody.appendChild(cardTitle);
+
+    return card;
+}
