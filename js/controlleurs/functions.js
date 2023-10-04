@@ -25,20 +25,33 @@ export function lanceLaRechercheEtFaitLeRendu() {
     nombreRecetteMAJ(resultat)
     
     // Création cartes recettes
-    resultat.recettes.forEach((recipe) => {
+    const recipes = resultat.recettes;
+    for (let i = 0; i < recipes.length; i++) {
+        const recipe = recipes[i];
         getRecipeCardDOM(recipe);
-    });
+    }
+    
     
     // MAJ des filtres
-    resultat.filtres.ingredients.forEach((ingredient) => {
+    const ingredients = resultat.filtres.ingredients;
+    const appliances = resultat.filtres.appliance;
+    const ustensils = resultat.filtres.ustensils;
+    
+    for (let i = 0; i < ingredients.length; i++) {
+        const ingredient = ingredients[i];
         tagsFactory.getIngredientCardDOM(ingredient);
-    });
-    resultat.filtres.appliance.forEach((appareil) => {
-        tagsFactory.getAppareilCardDOM(appareil);
-    });
-    resultat.filtres.ustensils.forEach((ustensil) => {
+    }
+    
+    for (let i = 0; i < appliances.length; i++) {
+        const appliance = appliances[i];
+        tagsFactory.getAppareilCardDOM(appliance);
+    }
+    
+    for (let i = 0; i < ustensils.length; i++) {
+        const ustensil = ustensils[i];
         tagsFactory.getUstensilCardDOM(ustensil);
-    });
+    }
+    
     
     
     document.querySelectorAll('.li-ingredients').forEach((element) => {
@@ -181,14 +194,14 @@ export function fermerTag(event) {
     const tableauSansElementSupprime = tableauTags.filter(element => element != texteElementASupprimer);
     let tableauSansElementSupprimeEtSansDoublons = [...new Set(tableauSansElementSupprime)];
     console.log(tableauSansElementSupprime);
-
+    
     // MAJ tableau des TAGS
     tableauTags.splice(0, tableauTags.length);
     tableauSansElementSupprimeEtSansDoublons.forEach(element => {
         tableauTags.push(element);
-      });
-      
-      const zoneListeIngredients = document.querySelector('.ingredient-list');
+    });
+    
+    const zoneListeIngredients = document.querySelector('.ingredient-list');
     const zoneListeAppareils = document.querySelector('.appareils-list');
     const zoneListeUstensils = document.querySelector('.ustensils-list');
     let resultat = searchService.search(searchText, filtres);
@@ -215,5 +228,5 @@ export function MAJTableauTags(tableauTags, nouveauTableauMAJ) {
         tableauTags.push(tag)
     })
     console.log(tableauTags);
-   return tableauTags 
+    return tableauTags 
 }
