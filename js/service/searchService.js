@@ -6,34 +6,6 @@ export class RecipesService {
         this.recipes = recipes;
     }
     
-    /*
-    "filtreRecherche": {
-        "ingredients": [
-            "Tomate",
-            "Pommes de terre",
-            "Huile d'olives",
-            "Oignon",
-            "Ail",
-            "Oseille",
-            "Oeuf",
-            "Crème fraîche",
-            "Vermicelles",
-            "Beurre salé",
-            "Poireau",
-            "Beurre"
-        ],
-        "ustensils": [
-            "cocotte minute",
-            "couteau",
-            "cuillère en bois",
-            "casserole"
-        ],
-        "appliance": [
-            "Mixer",
-            "Casserole"
-        ]
-    }*/
-    
     search(motRecherche, filtresSelectionnes) {
         let resultat = [];
         for (let i = 0; i < this.recipes.length; i++) {
