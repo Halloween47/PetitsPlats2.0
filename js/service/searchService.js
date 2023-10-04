@@ -34,7 +34,6 @@ export class RecipesService {
         ]
     }*/
     
-    // TODO: a continuer avec Clément
     search(motRecherche, filtresSelectionnes) {
         let resultat = this.recipes.filter((recipe) =>
         recipe.name.toLowerCase().includes(motRecherche) ||
