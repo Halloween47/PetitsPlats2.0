@@ -9,7 +9,7 @@ export function lanceLaRechercheEtFaitLeRendu() {
     console.log(resultat.recettes.length);
     if (resultat.recettes.length === 0) {
         console.log('pas de resultat');
-        getNoResultCardDOM();
+        getNoResultCardDOM(searchText);
         
     }
     

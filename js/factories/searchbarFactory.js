@@ -87,7 +87,7 @@ function getRecipeCardDOM(recette) {
     return card;
 }
 
-function getNoResultCardDOM() {
+function getNoResultCardDOM(searchText) {
     const zoneCards = document.querySelector('.main-zoneCards');
     const card = document.createElement('div');
     card.setAttribute('class', 'card');
@@ -101,7 +101,7 @@ function getNoResultCardDOM() {
     // Zone du contenu de la Card
     const cardTitle = document.createElement('h5');
     cardTitle.setAttribute('class', 'card-title');
-    cardTitle.textContent = '0 resultat';
+    cardTitle.textContent = 'Aucune recette ne contient le mot "'  + searchText + '"';
     cardZoneBody.appendChild(cardTitle);
 
     return card;
